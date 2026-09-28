@@ -1,26 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-
-const ROLES = [
-  "Frontend Developer",
-  "Mobile Developer",
-  "Backend Developer",
-  "UI/UX Designer",
-];
+import { useLanguage } from "../i18n/useLanguage.jsx";
 
 const MIN_PX = 13;
+const ROLE_KEYS = [
+  "roles.frontend",
+  "roles.mobile",
+  "roles.backend",
+  "roles.designer",
+];
 
 /**
- * RoleFlipper — cycles Kofi's four disciplines in the giant
- * headline slot. Auto-advances every 3s, pauses on hover/focus,
- * offers manual dash controls, and goes static (first role +
- * instant manual switching) under prefers-reduced-motion.
- * The animated words are aria-hidden; screen readers get the
- * full static list instead of a chatty live region.
- *
- * Autofit: every word is measured and shrunk until it fits its
- * viewport — no font-size guesswork, no overflow on any screen.
+ * RoleFlipper — cycles the four disciplines in the giant
+ * headline slot, now translated. Auto-advances every 3s, pauses
+ * on hover/focus, offers manual dash controls, and goes static
+ * (first role + instant switching) under prefers-reduced-motion.
+ * Animated words are aria-hidden; screen readers get the list.
+ * Every word is measured and shrunk until it fits its viewport.
  */
 export default function RoleFlipper() {
+  const { t } = useLanguage();
+  const roles = ROLE_KEYS.map((k) => t(k));
   const [index, setIndex] = useState(0);
   const paused = useRef(false);
   const reduceMotion = useRef(false);
@@ -34,7 +33,7 @@ export default function RoleFlipper() {
     if (reduceMotion.current) return;
     const id = window.setInterval(() => {
       if (!paused.current) {
-        setIndex((i) => (i + 1) % ROLES.length);
+        setIndex((i) => (i + 1) % ROLE_KEYS.length);
       }
     }, 3000);
     return () => window.clearInterval(id);
@@ -76,6 +75,9 @@ export default function RoleFlipper() {
     };
   }, [index]);
 
+  // Keep the index valid if the role count ever changes per locale.
+  const safeIndex = index % roles.length;
+
   return (
     <span
       className="flipper"
@@ -93,27 +95,27 @@ export default function RoleFlipper() {
       }}
     >
       <span className="visually-hidden">
-        Roles: {ROLES.join(", ")}.
+        {t("roles.list")}: {roles.join(", ")}.
       </span>
       <span
         className="flipper__viewport"
         ref={viewportRef}
         aria-hidden="true"
       >
-        <span key={index} ref={wordRef} className="flipper__word">
-          {ROLES[index]}
+        <span key={safeIndex} ref={wordRef} className="flipper__word">
+          {roles[safeIndex]}
         </span>
       </span>
-      <span className="flipper__dots" role="group" aria-label="Choose role">
-        {ROLES.map((role, i) => (
+      <span className="flipper__dots" role="group" aria-label={t("roles.choose")}>
+        {roles.map((role, i) => (
           <button
             key={role}
             type="button"
             className={
-              i === index ? "flipper__dot is-active" : "flipper__dot"
+              i === safeIndex ? "flipper__dot is-active" : "flipper__dot"
             }
-            aria-label={`Show ${role}`}
-            aria-current={i === index ? "true" : undefined}
+            aria-label={`${t("roles.show")} ${role}`}
+            aria-current={i === safeIndex ? "true" : undefined}
             onClick={() => setIndex(i)}
           >
             <span aria-hidden="true" />

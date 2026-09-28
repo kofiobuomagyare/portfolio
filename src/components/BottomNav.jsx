@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../i18n/useLanguage.jsx";
 import "./BottomNav.css";
 
 const TABS = [
@@ -66,8 +67,16 @@ const TABS = [
  * where the terminal title-bar nav takes over.
  */
 export default function BottomNav() {
+  const { t } = useLanguage();
   const [active, setActive] = useState("top");
   const navRef = useRef(null);
+  const labels = {
+    top: t("tab.home"),
+    about: t("tab.about"),
+    work: t("tab.work"),
+    experience: t("tab.exp"),
+    contact: t("tab.contact"),
+  };
 
   // Scroll-spy: highlight the tab of whatever section owns the
   // middle band of the viewport.
@@ -123,7 +132,7 @@ export default function BottomNav() {
   }, []);
 
   return (
-    <nav ref={navRef} className="bottom-nav" aria-label="Mobile">
+    <nav ref={navRef} className="bottom-nav" aria-label={t("tabsAria")}>
       <ul>
         {TABS.map((tab) => (
           <li key={tab.id}>
@@ -144,7 +153,7 @@ export default function BottomNav() {
               >
                 {tab.icon}
               </svg>
-              {tab.label}
+              {labels[tab.id]}
             </a>
           </li>
         ))}

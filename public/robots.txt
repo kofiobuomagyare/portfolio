@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kofi-obuom.vercel.app/sitemap.xml

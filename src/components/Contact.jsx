@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./Contact.css";
+import TypeLine from "./TypeLine.jsx";
+import { useLanguage } from "../i18n/useLanguage.jsx";
 
 const YEAR = new Date().getFullYear();
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/kofiobuomagyare@gmail.com";
@@ -33,10 +35,11 @@ function useReveal(ref) {
  * and the sign-off line.
  */
 export default function Contact() {
+  const { t } = useLanguage();
   const rootRef = useRef(null);
   useReveal(rootRef);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -65,8 +68,7 @@ export default function Contact() {
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setStatus("sent");
-      setForm({ name: "", email: "", message: "" });
+      window.location.hash = "#thanks";
     } catch {
       setStatus("error");
     }
@@ -81,34 +83,16 @@ export default function Contact() {
     >
       <div className="pane pane--contact">
         <p className="pane__ps" aria-hidden="true">
-          <span className="ps">$</span> ./contact.sh
+          <TypeLine text={t("contactCmd")} />
         </p>
         <div className="contact__grid">
           <div className="contact__side">
-            {status === "sent" ? (
-            <div className="form-note form-note--ok" role="status">
-              <p>
-                <span className="ps" aria-hidden="true">
-                  $
-                </span>{" "}
-                message sent — exit 0. I&apos;ll get back to you within a
-                day.
-              </p>
-              <button
-                type="button"
-                className="form-note__btn"
-                onClick={() => setStatus("idle")}
-              >
-                Send another
-              </button>
-            </div>
-          ) : (
             <form className="form" onSubmit={onSubmit} aria-label="Contact form">
               <p className="pane__ps" aria-hidden="true">
                 <span className="ps">$</span> ./send.sh --to kofi
               </p>
               <div className="field">
-                <label htmlFor="cf-name">your_name</label>
+                <label htmlFor="cf-name">{t("f.name")}</label>
                 <input
                   id="cf-name"
                   name="name"
@@ -123,7 +107,7 @@ export default function Contact() {
                 />
               </div>
               <div className="field">
-                <label htmlFor="cf-email">your_email</label>
+                <label htmlFor="cf-email">{t("f.email")}</label>
                 <input
                   id="cf-email"
                   name="email"
@@ -137,12 +121,12 @@ export default function Contact() {
                 />
               </div>
               <div className="field">
-                <label htmlFor="cf-message">message</label>
+                <label htmlFor="cf-message">{t("f.msg")}</label>
                 <textarea
                   id="cf-message"
                   name="message"
                   rows={5}
-                  placeholder="Hello Kofi — I'd like to talk about…"
+                  placeholder={t("f.msgPh")}
                   required
                   minLength={10}
                   maxLength={2000}
@@ -163,8 +147,7 @@ export default function Contact() {
               />
               {status === "error" ? (
                 <p className="form-note form-note--err" role="alert">
-                  Send failed — check your connection, or email me
-                  directly instead.
+                  {t("f.err")}
                 </p>
               ) : null}
               <button
@@ -172,52 +155,48 @@ export default function Contact() {
                 className="form__send"
                 disabled={status === "sending"}
               >
-                {status === "sending" ? "Sending…" : "$ ./send.sh"}
+                {status === "sending" ? t("f.sending") : t("f.send")}
               </button>
             </form>
-          )}
           </div>
           <div className="contact__copy">
             <h2 id="contact-heading" className="contact__title">
-              Let&apos;s build
-              <span className="contact__accent"> something real.</span>
+              {t("cA")}
+              <span className="contact__accent"> {t("cB")}</span>
             </h2>
-            <p className="contact__lede">
-              Full-time roles, freelance builds, or a FaithLooped-style
-              collaboration — my inbox is open. I reply within a day.
-            </p>
+            <p className="contact__lede">{t("lede")}</p>
             <div className="contact__actions">
               <a
                 className="contact__mail"
-            href="mailto:kofiobuomagyare@gmail.com?subject=Hello%20Kofi%20—%20let's%20talk"
-          >
-            kofiobuomagyare@gmail.com
-          </a>
-          <ul className="links" aria-label="Profiles and phone">
-            <li>
-              <a href="https://www.github.com/kofiobuomagyare">
-                GitHub<span aria-hidden="true"> ↗</span>
+                href="mailto:kofiobuomagyare@gmail.com?subject=Hello%20Kofi%20—%20let's%20talk"
+              >
+                kofiobuomagyare@gmail.com
               </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/kofi-obuom-agyare-760876263">
-                LinkedIn<span aria-hidden="true"> ↗</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/sey_ram08">
-                X<span aria-hidden="true"> ↗</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.instagram.com/_just.seyram_/">
-                Instagram<span aria-hidden="true"> ↗</span>
-              </a>
-            </li>
-            <li>
-              <a href="tel:+233507119463">+233 507 119 463</a>
-            </li>
-          </ul>
+              <ul className="links" aria-label={t("clinks")}>
+                <li>
+                  <a href="https://www.github.com/kofiobuomagyare">
+                    GitHub<span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/kofi-obuom-agyare-760876263">
+                    LinkedIn<span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/sey_ram08">
+                    X<span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/_just.seyram_/">
+                    Instagram<span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+233507119463">+233 507 119 463</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -229,9 +208,9 @@ export default function Contact() {
             </span>{" "}
             exit 0 — © {YEAR} Kofi Obuom Agyare · Accra, Ghana
           </p>
-          <p className="signoff__built">Built with React · no trackers</p>
+          <p className="signoff__built">{t("built")}</p>
           <a className="signoff__top" href="#top">
-            Back to top <span aria-hidden="true">↑</span>
+            {t("backTop")} <span aria-hidden="true">↑</span>
           </a>
         </footer>
       </div>

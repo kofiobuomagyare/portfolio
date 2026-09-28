@@ -17,11 +17,14 @@ const circlemask = async (size) =>
     .png()
     .toBuffer();
 
-for (const size of [180, 32]) {
-  const out =
-    size === 180
-      ? join(root, "public", "apple-touch-icon.png")
-      : join(root, "public", "favicon-32x32.png");
+const SIZES = [
+  { size: 512, name: "icon-512.png" },
+  { size: 192, name: "icon-192.png" },
+  { size: 180, name: "apple-touch-icon.png" },
+  { size: 32, name: "favicon-32x32.png" },
+];
+
+for (const { size, name } of SIZES) {
   // Circle-crop from the square source (pass 1), then size down (pass 2).
   // Two passes because sharp composites overlays after every resize op.
   const circled = await sharp(src)
@@ -29,6 +32,6 @@ for (const size of [180, 32]) {
     .composite([{ input: await circlemask(512), blend: "dest-in" }])
     .png()
     .toBuffer();
-  await sharp(circled).resize(size, size).png().toFile(out);
-  console.log("wrote", out);
+  await sharp(circled).resize(size, size).png().toFile(join(root, "public", name));
+  console.log("wrote", join("public", name));
 }

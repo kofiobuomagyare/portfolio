@@ -1,64 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./Experience.css";
-
-const JOBS = [
-  {
-    hash: "a3f9c1d",
-    date: "Apr 2025 – Jul 2025",
-    role: "Software Engineering Intern",
-    org: "AmaliTech",
-    place: "Takoradi, Ghana",
-    desc: "Four months shipping production software as part of an engineering team.",
-  },
-  {
-    hash: "7be42a0",
-    date: "Sep 2023 – Dec 2023",
-    role: "Bookstore Website & TEAS App Administrator",
-    org: "Smartline Publishers",
-    place: "Ghana",
-    desc: "Managed and updated the TEAS app — university and course guidance for SHS leavers — plus the bookstore website.",
-  },
-  {
-    hash: "c51d8e4",
-    date: "Aug 2022 – Oct 2022",
-    role: "Research Assistant",
-    org: "Smartline Publishers",
-    place: "Ghana",
-    desc: "Research support across publishing projects.",
-  },
-];
-
-const EDUCATION = [
-  {
-    hash: "e90b2f7",
-    date: "2024 – 2026",
-    role: "BTech, Information Technology — Software Engineering",
-    org: "Takoradi Technical University",
-    place: "Completed Aug 2026",
-    desc: "",
-  },
-  {
-    hash: "41ac6d2",
-    date: "2021 – 2023",
-    role: "Diploma of Technology, Information Technology",
-    org: "Takoradi Technical University",
-    place: "",
-    desc: "",
-  },
-];
-
-const LEADERSHIP = [
-  "SRC Entertainment Committee Chairman ’25/’26",
-  "Faculty Publicity Deputy ’23/’24",
-  "Entertainment Prefect (SHS)",
-  "Chapel Prefect (JHS)",
-];
-
-const CERTS = [
-  "AmaliTech Internship",
-  "ASUSTEM Robotics — Cybersecurity",
-  "Blogger of the Year ’22 — Hall Premier Awards",
-];
+import TypeLine from "./TypeLine.jsx";
+import { useLanguage } from "../i18n/useLanguage.jsx";
 
 function useReveal(ref) {
   useEffect(() => {
@@ -113,8 +56,55 @@ function Log({ items }) {
  * education, leadership, and certifications, all from the CV.
  */
 export default function Experience() {
+  const { t } = useLanguage();
   const rootRef = useRef(null);
   useReveal(rootRef);
+
+  const jobs = [
+    {
+      hash: "a3f9c1d",
+      date: "Apr 2025 – Jul 2025",
+      role: t("j.r1"),
+      org: "AmaliTech",
+      place: "Takoradi, Ghana",
+      desc: t("j.d1"),
+    },
+    {
+      hash: "7be42a0",
+      date: "Sep 2023 – Dec 2023",
+      role: t("j.r2"),
+      org: "Smartline Publishers",
+      place: "Ghana",
+      desc: t("j.d2"),
+    },
+    {
+      hash: "c51d8e4",
+      date: "Aug 2022 – Oct 2022",
+      role: t("j.r3"),
+      org: "Smartline Publishers",
+      place: "Ghana",
+      desc: t("j.d3"),
+    },
+  ];
+
+  const education = [
+    {
+      hash: "e90b2f7",
+      date: "2024 – 2026",
+      role: t("j.e1r"),
+      org: "Takoradi Technical University",
+      place: t("j.e1p"),
+      desc: "",
+    },
+    {
+      hash: "41ac6d2",
+      date: "2021 – 2023",
+      role: t("j.e2r"),
+      org: "Takoradi Technical University",
+      place: "",
+      desc: "",
+    },
+  ];
 
   return (
     <section
@@ -125,35 +115,35 @@ export default function Experience() {
     >
       <div className="pane">
         <p className="pane__ps" aria-hidden="true">
-          <span className="ps">$</span> git log --oneline --experience
+          <TypeLine text={t("expCmd")} />
         </p>
         <h2 id="experience-heading" className="pane__title">
-          Experience <span className="pane__script">(the road)</span>
+          {t("expA")} <span className="pane__script">{t("expB")}</span>
         </h2>
 
-        <h3 className="exp__sub">work</h3>
-        <Log items={JOBS} />
+        <h3 className="exp__sub">{t("expWork")}</h3>
+        <Log items={jobs} />
 
-        <h3 className="exp__sub">education</h3>
-        <Log items={EDUCATION} />
+        <h3 className="exp__sub">{t("expEdu")}</h3>
+        <Log items={education} />
 
         <div className="exp__cols">
           <div>
             <p className="pane__ps" aria-hidden="true">
-              <span className="ps">$</span> ls ~/leadership
+              <TypeLine text={t("leadCmd")} />
             </p>
-            <ul className="chips" aria-label="Leadership roles">
-              {LEADERSHIP.map((l) => (
+            <ul className="chips" aria-label={t("leadAria")}>
+              {t("lead").map((l) => (
                 <li key={l}>{l}</li>
               ))}
             </ul>
           </div>
           <div>
             <p className="pane__ps" aria-hidden="true">
-              <span className="ps">$</span> ls ~/certs
+              <TypeLine text={t("certCmd")} />
             </p>
-            <ul className="chips" aria-label="Certifications and awards">
-              {CERTS.map((c) => (
+            <ul className="chips" aria-label={t("certAria")}>
+              {t("cert").map((c) => (
                 <li key={c}>{c}</li>
               ))}
             </ul>

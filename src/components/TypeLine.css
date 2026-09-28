@@ -1,0 +1,28 @@
+/* TypeLine — blinking block caret while a prompt line types */
+.tw-caret {
+  display: inline-block;
+  width: 7px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: tw-blink 1.02s steps(1) infinite;
+}
+
+@keyframes tw-blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-caret {
+    animation: none;
+    display: none;
+  }
+}

@@ -368,7 +368,11 @@
   display: block;
 }
 
-.figure__photo:not([hidden]) + .bust {
+.figure__picture {
+  display: contents;
+}
+
+.hero__figure:has(.figure__photo:not([hidden])) .bust {
   display: none;
 }
 
@@ -746,6 +750,19 @@
 }
 
 /* ——— responsive ——— */
+@media (max-width: 1100px) {
+  .hero__side {
+    display: none;
+  }
+}
+
+/* room for the language + theme controls on narrow bars */
+@media (max-width: 700px) {
+  .win-title {
+    display: none;
+  }
+}
+
 @media (max-width: 860px) {
   /* clear the floating tab bar */
   .page {
@@ -839,6 +856,11 @@
 .theme-toggle svg {
   width: 18px;
   height: 18px;
+  transition: transform 220ms ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(24deg);
 }
 
 /* ——— light-theme-only refinements ——— */

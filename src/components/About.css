@@ -19,6 +19,45 @@
   transform: none;
 }
 
+/* staggered entrances — rows rise in sequence as the pane lands */
+.reveal .fact,
+.reveal .group,
+.reveal .stat {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 500ms ease,
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible .fact,
+.reveal.is-visible .group,
+.reveal.is-visible .stat {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal.is-visible .fact:nth-child(2),
+.reveal.is-visible .group:nth-child(2),
+.reveal.is-visible .stat:nth-child(2) {
+  transition-delay: 70ms;
+}
+
+.reveal.is-visible .fact:nth-child(3),
+.reveal.is-visible .group:nth-child(3),
+.reveal.is-visible .stat:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+.reveal.is-visible .fact:nth-child(4),
+.reveal.is-visible .group:nth-child(4) {
+  transition-delay: 210ms;
+}
+
+.reveal.is-visible .fact:nth-child(5) {
+  transition-delay: 280ms;
+}
+
 .pane {
   /* full-bleed like the hero card — same outer edges */
   margin: 0;
@@ -66,12 +105,17 @@
 }
 
 /* ——— profile ——— */
+.profile__picture {
+  display: contents;
+}
+
 .profile__photo {
-  width: clamp(140px, 16vw, 190px);
-  aspect-ratio: 1;
+  /* passport size: fixed 35:45 ratio, small and deterministic */
+  width: 168px;
+  height: 214px;
   object-fit: cover;
   object-position: top center;
-  border-radius: 18px;
+  border-radius: 14px;
   border: 1px solid var(--line);
   filter: grayscale(1) contrast(1.06);
   margin-bottom: 20px;
@@ -137,12 +181,14 @@
   font-weight: 500;
   transition:
     border-color 160ms ease,
-    color 160ms ease;
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 .links a:hover {
   border-color: var(--accent);
   color: var(--accent);
+  transform: translateY(-2px);
 }
 
 /* ——— stack pane ——— */
@@ -232,6 +278,14 @@
   border-bottom: 2px solid var(--accent);
   padding-bottom: 4px;
   transition: color 160ms ease;
+}
+
+.cta-row svg {
+  transition: transform 180ms ease;
+}
+
+.cta-row:hover svg {
+  transform: translate(3px, -3px);
 }
 
 .cta-row:hover {

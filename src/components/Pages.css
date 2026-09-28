@@ -1,0 +1,24 @@
+/* Minimal standalone views (Thanks / 404) — same tokens, no dependencies */
+.minpage {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 1.6vw, 22px);
+  background:
+    radial-gradient(120% 90% at 50% 0%, var(--page-glow) 0%, var(--void) 58%) fixed,
+    var(--void);
+}
+
+.minpage .pane {
+  width: 100%;
+  max-width: 720px;
+  text-align: left;
+}
+
+.minpage .contact__title {
+  font-size: clamp(2.4rem, 8vw, 4.6rem);
+}
+
+.minpage .contact__actions {
+  margin-top: 26px;
+}

@@ -9,6 +9,43 @@
       name="description"
       content="Kofi Obuom Agyare — Frontend (React), Mobile (React Native & Flutter), Backend (Spring Boot & FastAPI) developer and UI/UX designer."
     />
+    <link rel="canonical" href="https://kofi-obuom.vercel.app/" />
+    <meta name="theme-color" content="#0d1626" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kofi Obuom Agyare" />
+    <meta
+      property="og:title"
+      content="Kofi Obuom Agyare — Developer & Designer"
+    />
+    <meta
+      property="og:description"
+      content="React frontends, React Native & Flutter apps, Spring Boot & FastAPI backends, wrapped in UI/UX that feels effortless."
+    />
+    <meta property="og:url" content="https://kofi-obuom.vercel.app/" />
+    <meta
+      property="og:image"
+      content="https://kofi-obuom.vercel.app/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Kofi Obuom Agyare — Developer and Designer"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Kofi Obuom Agyare — Developer & Designer"
+    />
+    <meta
+      name="twitter:description"
+      content="React frontends, React Native & Flutter apps, Spring Boot & FastAPI backends, wrapped in UI/UX that feels effortless."
+    />
+    <meta
+      name="twitter:image"
+      content="https://kofi-obuom.vercel.app/og-image.jpg"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>Kofi Obuom Agyare — Developer &amp; Designer</title>
     <script>
       // Set the theme before first paint to avoid a flash.
@@ -23,6 +60,17 @@
       } catch (e) {
         document.documentElement.dataset.theme = "dark";
       }
+      // Same idea for language: stored preference, else the OS language.
+      try {
+        var langs = ["en", "fr", "es", "pt", "nl", "ar", "zh", "ja", "sw", "tw", "ak", "ga", "ee", "ha", "yo", "ig", "pcm", "gpe", "am", "zu"];
+        var l = localStorage.getItem("koa-lang");
+        if (langs.indexOf(l) === -1) {
+          var sys = (navigator.language || "en").split("-")[0].toLowerCase();
+          l = langs.indexOf(sys) !== -1 ? sys : "en";
+        }
+        document.documentElement.lang = l;
+        document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+      } catch (e) {}
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

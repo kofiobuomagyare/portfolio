@@ -72,6 +72,11 @@ html {
   overflow-x: clip;
 }
 
+/* breathing room when jumping to anchors */
+section[id] {
+  scroll-margin-top: 10px;
+}
+
 body {
   margin: 0;
   overflow-x: clip;

@@ -6,6 +6,8 @@ import About from "./About.jsx";
 import Projects from "./Projects.jsx";
 import Experience from "./Experience.jsx";
 import Contact from "./Contact.jsx";
+import LanguageSwitcher from "./LanguageSwitcher.jsx";
+import { useLanguage } from "../i18n/useLanguage.jsx";
 
 /**
  * Hero — terminal-window concept.
@@ -41,6 +43,13 @@ function useMounted(ref) {
 export default function Hero() {
   const rootRef = useRef(null);
   const badgeRef = useRef(null);
+  const { t } = useLanguage();
+  const roleNames = [
+    t("roles.frontend"),
+    t("roles.mobile"),
+    t("roles.backend"),
+    t("roles.designer"),
+  ];
   const [theme, setTheme] = useState(() => {
     // Stored preference wins, otherwise follow the OS.
     // (The pre-paint script in index.html computes the same value,
@@ -115,7 +124,7 @@ export default function Hero() {
   return (
     <main className="page">
       <a className="skip-link" href="#hero-heading">
-        Skip to introduction
+        {t("skip")}
       </a>
 
       <section ref={rootRef} id="top" className="hero" aria-labelledby="hero-heading">
@@ -133,24 +142,23 @@ export default function Hero() {
           <p className="win-title">kofi@portfolio: ~</p>
           <nav aria-label="Primary">
             <ul className="nav">
-              <li><a href="#about">About</a></li>
-              <li><a href="#work">Work</a></li>
-              <li><a href="#experience">Experience</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#about">{t("nav.about")}</a></li>
+              <li><a href="#work">{t("nav.work")}</a></li>
+              <li><a href="#experience">{t("nav.experience")}</a></li>
+              <li><a href="#contact">{t("nav.contact")}</a></li>
             </ul>
           </nav>
           <p className="availability">
             <span className="pulse" aria-hidden="true" />
-            Available for work
+            {t("avail")}
           </p>
+          <LanguageSwitcher />
           <button
             type="button"
             className="theme-toggle"
             onClick={toggleTheme}
             aria-label={
-              theme === "dark"
-                ? "Switch to light mode"
-                : "Switch to dark mode"
+              theme === "dark" ? t("themeToLight") : t("themeToDark")
             }
           >
             {theme === "dark" ? (
@@ -187,15 +195,14 @@ export default function Hero() {
         <div className="hero__headline">
           <h1 id="hero-heading" className="headline">
             <span className="visually-hidden">
-              Kofi Obuom Agyare — Frontend Developer, Mobile Developer,
-              Backend Developer, UI/UX Designer
+              Kofi Obuom Agyare — {roleNames.join(", ")}
             </span>
             <span aria-hidden="true">
               <RoleFlipper />
             </span>
           </h1>
           <p className="headline__script" aria-hidden="true">
-            (Kofi Obuom Agyare)
+            {t("heroScript")}
           </p>
         </div>
 
@@ -207,14 +214,21 @@ export default function Hero() {
           rgba · 1000 × 1000
         </span>
         <figure className="hero__figure">
-          <img
-            className="figure__photo"
-            src={PORTRAIT_SRC}
-            alt="Portrait of Kofi Obuom Agyare"
-            onError={(e) => {
-              e.currentTarget.hidden = true;
-            }}
-          />
+          <picture className="figure__picture">
+            <source srcSet="/portrait.webp" type="image/webp" />
+            <img
+              className="figure__photo"
+              src={PORTRAIT_SRC}
+              alt="Portrait of Kofi Obuom Agyare"
+              width={1000}
+              height={1000}
+              fetchpriority="high"
+              decoding="async"
+              onError={(e) => {
+                e.currentTarget.hidden = true;
+              }}
+            />
+          </picture>
           <div className="bust" aria-hidden="true">
             <div className="bust__halo" />
             <div className="bust__head" />
@@ -224,7 +238,7 @@ export default function Hero() {
             <span className="bust__mono">KO</span>
           </div>
           <figcaption className="visually-hidden">
-            Stylised portrait placeholder. Add your photo at public/portrait.jpg.
+            {t("figCap")}
           </figcaption>
         </figure>
 
@@ -232,14 +246,10 @@ export default function Hero() {
         <div className="hero__bottom">
           <div className="bio">
             <p className="bio__ps" aria-hidden="true">
-              <span className="ps">$</span> whoami
+              <span className="ps">$</span> {t("whoami")}
             </p>
             <p className="bio__name">Kofi Obuom Agyare</p>
-            <p className="bio__text">
-              I turn ideas into fast, functional products — React frontends,
-              React&nbsp;Native &amp; Flutter apps, Spring&nbsp;Boot &amp;
-              FastAPI backends, wrapped in UI/UX that feels effortless.
-            </p>
+            <p className="bio__text">{t("heroBio")}</p>
           </div>
 
           <div ref={badgeRef} className="badge">
@@ -259,7 +269,7 @@ export default function Hero() {
             <a
               className="badge__cta"
               href="#contact"
-              aria-label="Get started — contact Kofi"
+              aria-label={t("badge")}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true" className="badge__arrow">
                 <path
@@ -276,7 +286,7 @@ export default function Hero() {
 
           <div className="scroll">
             <button type="button" className="scroll__btn" onClick={scrollDown}>
-              Scroll Down
+              {t("scroll")}
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   d="M12 4v16m0 0 6-6m-6 6-6-6"
@@ -294,9 +304,9 @@ export default function Hero() {
         {/* ——— stack as shell output ——— */}
         <footer className="hero__stack">
           <span className="stack__ps" aria-hidden="true">
-            <span className="ps">$</span> cat ./stack.txt
+            <span className="ps">$</span> {t("stackCmd")}
           </span>
-          <ul aria-label="Specialisms">
+          <ul aria-label={t("stackAria")}>
             {STACK.map((s) => (
               <li key={s}>{s}</li>
             ))}
