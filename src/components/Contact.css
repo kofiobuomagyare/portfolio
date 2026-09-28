@@ -1,0 +1,304 @@
+/* ————————————————————————————————
+   Contact — the ask + sign-off
+   (shares .pane / .pane__ps / .links with About.css)
+———————————————————————————————— */
+.contact {
+  padding: clamp(28px, 6vh, 72px) clamp(10px, 1.6vw, 22px);
+  padding-top: 0;
+}
+
+.pane--contact {
+  text-align: left;
+  overflow: clip;
+  background:
+    radial-gradient(
+      60% 90% at 50% 110%,
+      var(--halo-soft),
+      transparent 70%
+    ),
+    var(--card);
+}
+
+.contact__title {
+  margin: 0 0 12px;
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  line-height: 0.98;
+  color: var(--bone);
+  text-wrap: balance;
+}
+
+.contact__accent {
+  color: transparent;
+  background: linear-gradient(
+    120deg,
+    var(--accent),
+    var(--accent-deep)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .contact__accent {
+    color: var(--accent);
+    background: none;
+  }
+}
+
+.contact__lede {
+  margin: 0 0 26px;
+  max-width: 52ch;
+  color: var(--body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.contact__actions {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 0;
+}
+
+/* ——— side-by-side: copy left, form right ——— */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  grid-template-areas: "copy side";
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  margin-bottom: 34px;
+}
+
+.contact__copy {
+  grid-area: copy;
+  min-width: 0;
+}
+
+.contact__side {
+  grid-area: side;
+  min-width: 0;
+}
+
+.contact__copy .contact__title {
+  font-size: clamp(2.2rem, 4.6vw, 3.9rem);
+}
+
+.contact__side .form {
+  max-width: none;
+}
+
+.contact__side .form-note {
+  max-width: none;
+}
+
+/* ——— contact form ——— */
+.form {
+  display: grid;
+  gap: 14px;
+  max-width: 640px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--status-bg);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.field label::before {
+  content: "> ";
+  color: var(--muted);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--bone);
+  font-family: var(--sans);
+  /* 16px+ prevents iOS auto-zoom on focus */
+  font-size: 16px;
+  line-height: 1.55;
+  transition: border-color 160ms ease;
+}
+
+.field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* honeypot — never visible, never focusable */
+.hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form__send {
+  justify-self: start;
+  min-height: 52px;
+  padding: 12px 30px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--accent), var(--accent-deep));
+  color: var(--cta-ink);
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 12px 34px rgba(43, 92, 230, 0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.form__send:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(43, 92, 230, 0.45);
+}
+
+.form__send:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.form-note {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  max-width: 640px;
+}
+
+.form-note p {
+  margin: 0 0 10px;
+}
+
+.form-note--ok {
+  border: 1px solid var(--accent);
+  background: var(--status-bg);
+  color: var(--body);
+}
+
+.form-note--err {
+  border: 1px solid #e5484d;
+  color: var(--body);
+}
+
+.form-note__btn {
+  min-height: 44px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--bone);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.form-note__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.contact__mail {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 56px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, var(--accent), var(--accent-deep));
+  color: var(--cta-ink);
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.4vw, 1.1rem);
+  text-decoration: none;
+  box-shadow: 0 12px 34px rgba(43, 92, 230, 0.35);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  overflow-wrap: anywhere;
+}
+
+.contact__mail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(43, 92, 230, 0.45);
+}
+
+.contact__mail:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.signoff {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.signoff__line,
+.signoff__built {
+  margin: 0;
+}
+
+.signoff__top {
+  margin-left: auto;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--body);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.signoff__top:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "side";
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__mail {
+    transform: none;
+  }
+}

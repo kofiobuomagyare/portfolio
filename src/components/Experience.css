@@ -1,0 +1,105 @@
+/* ————————————————————————————————
+   Experience — git-log timeline
+   (shares .pane / .pane__ps / .pane__title / .chips with About.css)
+———————————————————————————————— */
+.experience {
+  padding: clamp(28px, 6vh, 72px) clamp(10px, 1.6vw, 22px);
+  padding-top: 0;
+}
+
+.exp__sub {
+  margin: 26px 0 14px;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.exp__sub:first-of-type {
+  margin-top: 0;
+}
+
+.log {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+}
+
+.commit {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 16px;
+  padding: 16px 4px;
+  border-bottom: 1px dashed var(--line);
+  border-radius: 8px;
+  transition: background-color 180ms ease;
+}
+
+.commit > * {
+  min-width: 0;
+}
+
+.commit:first-child {
+  border-top: 1px dashed var(--line);
+}
+
+.commit:hover {
+  background: var(--status-bg);
+}
+
+.commit__hash {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  padding-top: 3px;
+}
+
+.commit__title {
+  margin: 0 0 4px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--bone);
+}
+
+.commit__at {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.commit__meta {
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.commit__desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--body);
+  max-width: 70ch;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+.exp__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  margin-top: 26px;
+}
+
+@media (max-width: 860px) {
+  .commit {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .exp__cols {
+    grid-template-columns: 1fr;
+  }
+}

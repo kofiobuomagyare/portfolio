@@ -1,0 +1,135 @@
+/* ————————————————————————————————
+   BottomNav — iOS Liquid Glass tab bar, mobile only
+———————————————————————————————— */
+.bottom-nav {
+  position: fixed;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: none;
+  width: min(430px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  padding: 8px;
+  border-radius: 30px;
+  /* liquid glass material: tinted blur + diagonal sheen so the
+     layer reads as a lens, not a flat translucent box */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.03) 38%,
+      rgba(255, 255, 255, 0) 62%,
+      rgba(255, 255, 255, 0.07)
+    ),
+    var(--tabbar-bg);
+  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+  backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.3),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08),
+    inset 1px 0 1px rgba(255, 255, 255, 0.06),
+    inset -1px 0 1px rgba(255, 255, 255, 0.06),
+    0 16px 44px rgba(0, 0, 0, 0.38);
+  transition:
+    translate 240ms ease,
+    opacity 240ms ease;
+}
+
+/* hidden while typing — the OS keyboard owns the bottom edge then */
+.bottom-nav.is-hidden {
+  translate: 0 calc(100% + 24px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* top glare — the curved light-catch that sells the "liquid" */
+.bottom-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% -20%,
+    rgba(255, 255, 255, 0.18),
+    transparent 60%
+  );
+}
+
+/* solid fallback where backdrop-filter is unsupported */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bottom-nav {
+    background: var(--card);
+  }
+}
+
+.bottom-nav ul {
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bottom-nav li {
+  flex: 1;
+  min-width: 0;
+}
+
+.bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: 2px;
+  min-height: 50px;
+  padding: 6px 2px;
+  border-radius: 20px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition:
+    color 160ms ease,
+    background-color 200ms ease;
+}
+
+.bottom-nav a svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bottom-nav a:hover {
+  color: var(--bone);
+}
+
+.bottom-nav a.is-active {
+  color: var(--accent);
+  background: rgba(92, 140, 255, 0.14);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0) 55%
+    ),
+    color-mix(in srgb, var(--accent) 16%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 2px 10px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 860px) {
+  .bottom-nav {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav {
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,3 @@
+/* Intentionally empty — hero styles live in components/Hero.css,
+   base tokens in index.css. Kept so the Vite scaffold import graph
+   stays valid if re-added. */
