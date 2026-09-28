@@ -133,8 +133,9 @@ export default function Hero() {
           <p className="win-title">kofi@portfolio: ~</p>
           <nav aria-label="Primary">
             <ul className="nav">
-              <li><a href="#work">Work</a></li>
               <li><a href="#about">About</a></li>
+              <li><a href="#work">Work</a></li>
+              <li><a href="#experience">Experience</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </nav>

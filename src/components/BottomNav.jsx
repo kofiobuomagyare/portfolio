@@ -14,6 +14,17 @@ const TABS = [
     ),
   },
   {
+    id: "about",
+    label: "About",
+    href: "#about",
+    icon: (
+      <>
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </>
+    ),
+  },
+  {
     id: "work",
     label: "Work",
     href: "#work",
@@ -25,13 +36,13 @@ const TABS = [
     ),
   },
   {
-    id: "about",
-    label: "About",
-    href: "#about",
+    id: "experience",
+    label: "Experience",
+    href: "#experience",
     icon: (
       <>
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
       </>
     ),
   },
@@ -59,14 +70,13 @@ export default function BottomNav() {
   const navRef = useRef(null);
 
   // Scroll-spy: highlight the tab of whatever section owns the
-  // middle band of the viewport. Experience has no tab of its own,
-  // so it keeps its closest neighbor (Work) lit.
+  // middle band of the viewport.
   useEffect(() => {
     const tabFor = {
       top: "top",
       about: "about",
       work: "work",
-      experience: "work",
+      experience: "experience",
       contact: "contact",
     };
     const sections = Object.keys(tabFor)
